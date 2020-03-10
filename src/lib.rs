@@ -4,9 +4,11 @@ struct ThreeSum {
 
 impl ThreeSum {
     fn new(numbers: Vec<i64>) -> ThreeSum {
-        ThreeSum {
+        let mut instance = ThreeSum {
             sorted_numbers: numbers
-        }
+        };
+        instance.sorted_numbers.sort();
+        instance
     }
 
     fn get_triples_sum_to_zero(&self) -> Vec<Vec<i64>> {
@@ -32,6 +34,7 @@ mod tests {
     #[test]
     fn finds_none() {
         let sorter = ThreeSum::new(vec![-10, 0, 9, 2, -10, -40]);
-        assert_eq!(sorter.get_triples_sum_to_zero(), vec![]);
+        let expected: Vec<Vec<i64>> = vec![];
+        assert_eq!(sorter.get_triples_sum_to_zero(), expected);
     }
 }
