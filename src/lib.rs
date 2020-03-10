@@ -1,3 +1,5 @@
+use std::ops::Index;
+
 struct ThreeSum {
     sorted_numbers: Vec<i64>,
 }
@@ -12,7 +14,28 @@ impl ThreeSum {
     }
 
     fn get_triples_sum_to_zero(&self) -> Vec<Vec<i64>> {
-        vec![]
+        let mut result: Vec<Vec<i64>> = vec![];
+        for index in 0..self.sorted_numbers.len() {
+            if self.sorted_numbers[index] > 0 {
+                break;
+            }
+            if index != 0 && self.sorted_numbers[index] == self.sorted_numbers[index - 1] {
+                continue;
+            }
+            let mut low_pointer = index + 1;
+            let mut high_pointer = self.sorted_numbers.len() - 1;
+            while low_pointer < high_pointer {
+                if self.sorted_numbers[index] + self.sorted_numbers[low_pointer] + self.sorted_numbers[high_pointer] == 0 {
+                    result.push(vec![self.sorted_numbers[index], self.sorted_numbers[low_pointer], self.sorted_numbers[high_pointer]]);
+                }
+                if self.sorted_numbers[index] + self.sorted_numbers[low_pointer] + self.sorted_numbers[high_pointer] >= 0 {
+                    high_pointer -= 1;
+                } else if self.sorted_numbers[index] + self.sorted_numbers[low_pointer] + self.sorted_numbers[high_pointer] <= 0 {
+                    low_pointer += 1;
+                }
+            }
+        }
+        result
     }
 }
 
